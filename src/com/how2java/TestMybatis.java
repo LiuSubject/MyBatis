@@ -10,7 +10,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
  
 import com.how2java.pojo.Category;
-import com.how2java.pojo.Product;
  
 public class TestMybatis {
  
@@ -18,20 +17,19 @@ public class TestMybatis {
         String resource = "mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession session=sqlSessionFactory.openSession();
+        SqlSession session = sqlSessionFactory.openSession();
+ 
+        listAll(session);
          
-        List<Category> cs=session.selectList("listCategory");
+        session.commit();
+        session.close();
+ 
+    }
+ 
+    private static void listAll(SqlSession session) {
+        List<Category> cs = session.selectList("listCategory");
         for (Category c : cs) {
             System.out.println(c.getName());
-        }
-         
-        System.out.println("\n\n");
-        
-        List<Product> ps=session.selectList("listProduct");
-        for (Product p : ps) {
-            System.out.println(p.getId());
-            System.out.println(p.getName());
-            System.out.println(p.getPrice());
         }
     }
 }
