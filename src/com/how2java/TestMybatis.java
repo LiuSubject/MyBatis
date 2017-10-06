@@ -2,9 +2,7 @@ package com.how2java;
   
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
  
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -12,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
  
 import com.how2java.pojo.Category;
+import com.how2java.pojo.Product;
   
 public class TestMybatis {
   
@@ -21,13 +20,13 @@ public class TestMybatis {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession session = sqlSessionFactory.openSession();
   
-        Map<String,Object> params = new HashMap<>();
-        params.put("id", 3);
-        params.put("name", "cat");
-         
-        List<Category> cs = session.selectList("listCategoryByIdAndName",params);
+        List<Category> cs = session.selectList("listCategory");
         for (Category c : cs) {
-            System.out.println(c.getName());
+            System.out.println(c);
+            List<Product> ps = c.getProducts();
+            for (Product p : ps) {
+                System.out.println("\t"+p);
+            }
         }
  
         session.commit();

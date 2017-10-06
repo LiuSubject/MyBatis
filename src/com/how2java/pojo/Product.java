@@ -1,7 +1,6 @@
 package com.how2java.pojo;
  
 public class Product {
- 
     private int id;
     private String name;
     private float price;
@@ -23,5 +22,9 @@ public class Product {
     public void setPrice(float price) {
         this.price = price;
     }
-     
+    @Override
+    public String toString() {
+        return "Product [id=" + id + ", name=" + name + ", price=" + price + "]";
+    }
+ 
 }
